@@ -30,7 +30,16 @@
         Icon="{StaticResource IconMeta}"
         ContentTemplate="{DataTemplate pages:MapaPage}"
         Route="mapa" />
-
+    <ShellContent
+        Title="Pegar Ruta"
+        Icon="{StaticResource IconMeta}"
+        ContentTemplate="{DataTemplate pages:PegarRuta}"
+        Route="ruta" />
+    <ShellContent
+        Title="Crear Ruta"
+        Icon="{StaticResource IconMeta}"
+        ContentTemplate="{DataTemplate pages:NewPage1}"
+        Route="page1" />
     <Shell.FlyoutFooter>
         <Grid Padding="15">
             <sf:SfSegmentedControl x:Name="ThemeSegmentedControl" 

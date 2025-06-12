@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMonitoreo.Pages.PegarRuta"
+             Title="PegarRuta">
+    <VerticalStackLayout Spacing="10">
+        <Entry x:Name="UrlEntry" Placeholder="Pega la URL del mapa aquí" />
+        <Button Text="Mostrar Mapa" Clicked="OnMostrarMapaClicked" />
+        <WebView x:Name="MapaWebView" HeightRequest="400" />
+    </VerticalStackLayout>
+</ContentPage>
