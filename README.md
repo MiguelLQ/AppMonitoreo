@@ -4,4 +4,4 @@ DENTRO DE AndroidManifest
 <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
 #huachuhuillca commit
-#hansnolasco commit
+#hansnolascobrayan  commit
