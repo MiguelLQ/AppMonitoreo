@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             x:Class="AppMonitoreo.Pages.VerMapaPage"
+             Title="NewPage1">
+    <VerticalStackLayout>
+        <maps:Map x:Name="map"
+                  HeightRequest="650"
+                  IsShowingUser="False"
+                  MapType="Street" />
+        <!-- Aquí se muestran las coordenadas -->
+        <Label x:Name="lblCoordenadas"
+               Text="Coordenadas: ---"
+               FontSize="18"
+               HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

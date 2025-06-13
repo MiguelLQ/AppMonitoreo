@@ -36,9 +36,9 @@
         ContentTemplate="{DataTemplate pages:PegarRuta}"
         Route="ruta" />
     <ShellContent
-        Title="Crear Ruta"
+        Title="Ver Ubicacion"
         Icon="{StaticResource IconMeta}"
-        ContentTemplate="{DataTemplate pages:NewPage1}"
+        ContentTemplate="{DataTemplate pages:VerMapaPage}"
         Route="page1" />
     <ShellContent
         Title="Cargar Ruta"

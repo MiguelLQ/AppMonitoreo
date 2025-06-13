@@ -1,5 +1,6 @@
 using System.Text.Json;
 using AppMonitoreo.Models;
+using AppMonitoreo.Services;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
@@ -7,10 +8,11 @@ namespace AppMonitoreo.Pages;
 
 public partial class CargarRutaPage : ContentPage
 {
-	public CargarRutaPage()
-	{
-		InitializeComponent();
-	}
+    public CargarRutaPage()
+    {
+        InitializeComponent();
+    }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -35,6 +37,7 @@ public partial class CargarRutaPage : ContentPage
                     var posicion = new Location(ubicacion.Latitude, ubicacion.Longitude);
                     var region = MapSpan.FromCenterAndRadius(posicion, Distance.FromKilometers(1));
                     map.MoveToRegion(region);
+
                     // Instancia del servicio Firebase
                     var firebase = new FirebaseServices();
 
@@ -45,9 +48,13 @@ public partial class CargarRutaPage : ContentPage
                         Longitud = ubicacion.Longitude,
                     };
 
-                    // Enviar a Firebase
-                    await firebase.AddUbicacion(nuevaUbicacion);
-                    await DisplayAlert("Ubicación", "Ubicacion enviada.", "OK");
+                    // UID fijo de prueba
+                    string uid = "FfnTBoXRCShQzIF5cb2OdgFYdlA2"; // <-- cambia esto por el UID real si usas autenticación
+
+                    // Enviar la ubicación al nodo de usuario específico
+                    await firebase.SetUbicacionActual(uid, nuevaUbicacion);
+
+                    await DisplayAlert("Ubicación", "Ubicación enviada correctamente.", "OK");
 
                     var pin = new Pin
                     {
@@ -104,7 +111,6 @@ public partial class CargarRutaPage : ContentPage
             var json = await reader.ReadToEndAsync();
 
             using var document = JsonDocument.Parse(json);
-
             var features = document.RootElement.GetProperty("features");
 
             foreach (var feature in features.EnumerateArray())
@@ -118,10 +124,9 @@ public partial class CargarRutaPage : ContentPage
 
                     foreach (var coord in coordinates.EnumerateArray())
                     {
-                        // GeoJSON: [longitude, latitude, altitude]
+                        // GeoJSON usa formato: [longitude, latitude]
                         double lon = coord[0].GetDouble();
                         double lat = coord[1].GetDouble();
-
                         ubicaciones.Add(new Location(lat, lon));
                     }
 
@@ -136,5 +141,4 @@ public partial class CargarRutaPage : ContentPage
 
         return ubicaciones;
     }
-
 }
