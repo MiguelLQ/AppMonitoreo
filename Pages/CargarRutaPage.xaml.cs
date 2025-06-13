@@ -8,6 +8,9 @@ namespace AppMonitoreo.Pages;
 
 public partial class CargarRutaPage : ContentPage
 {
+    private bool _rutaDibujada = false;
+    private string _uid = "FfnTBoXRCShQzIF5cb2OdgFYdlA2"; // UID fijo (reemplaza si usas autenticación)
+
     public CargarRutaPage()
     {
         InitializeComponent();
@@ -25,78 +28,85 @@ public partial class CargarRutaPage : ContentPage
 
         if (permiso == PermissionStatus.Granted)
         {
-            try
+            // Inicia el temporizador que actualiza ubicación cada 10 segundos
+            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
-                var solicitud = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(10));
-                var ubicacion = await Geolocation.GetLocationAsync(solicitud);
-
-                if (ubicacion != null)
-                {
-                    lblCoordenadas.Text = $"Coordenadas: Lat={ubicacion.Latitude}, Lon={ubicacion.Longitude}";
-
-                    var posicion = new Location(ubicacion.Latitude, ubicacion.Longitude);
-                    var region = MapSpan.FromCenterAndRadius(posicion, Distance.FromKilometers(1));
-                    map.MoveToRegion(region);
-
-                    // Instancia del servicio Firebase
-                    var firebase = new FirebaseServices();
-
-                    // Crear objeto de ubicación
-                    var nuevaUbicacion = new Ubicacion
-                    {
-                        Latitud = ubicacion.Latitude,
-                        Longitud = ubicacion.Longitude,
-                    };
-
-                    // UID fijo de prueba
-                    string uid = "FfnTBoXRCShQzIF5cb2OdgFYdlA2"; // <-- cambia esto por el UID real si usas autenticación
-
-                    // Enviar la ubicación al nodo de usuario específico
-                    await firebase.SetUbicacionActual(uid, nuevaUbicacion);
-
-                    await DisplayAlert("Ubicación", "Ubicación enviada correctamente.", "OK");
-
-                    var pin = new Pin
-                    {
-                        Label = "Mi ubicación",
-                        Location = posicion,
-                        Type = PinType.Place
-                    };
-
-                    map.Pins.Clear();
-                    map.Pins.Add(pin);
-                }
-                else
-                {
-                    await DisplayAlert("Ubicación", "No se pudo obtener la ubicación.", "OK");
-                }
-
-                // Aquí cargamos y dibujamos la ruta
-                var ruta = await CargarRutaDesdeGeoJsonAsync();
-                if (ruta.Count > 1)
-                {
-                    var polyline = new Polyline
-                    {
-                        StrokeColor = Colors.Blue,
-                        StrokeWidth = 5
-                    };
-
-                    foreach (var punto in ruta)
-                    {
-                        polyline.Geopath.Add(punto);
-                    }
-
-                    map.MapElements.Add(polyline);
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", $"Ocurrió un error: {ex.Message}", "OK");
-            }
+                _ = ActualizarUbicacionAsync(); // Llamada asíncrona
+                return true; // Repetir
+            });
         }
         else
         {
             await DisplayAlert("Permisos", "No se concedieron los permisos de ubicación.", "OK");
+        }
+    }
+
+    private async Task ActualizarUbicacionAsync()
+    {
+        try
+        {
+            var solicitud = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(10));
+            var ubicacion = await Geolocation.GetLocationAsync(solicitud);
+
+            if (ubicacion != null)
+            {
+                lblCoordenadas.Text = $"Coordenadas: Lat={ubicacion.Latitude}, Lon={ubicacion.Longitude}";
+
+                var posicion = new Location(ubicacion.Latitude, ubicacion.Longitude);
+                var region = MapSpan.FromCenterAndRadius(posicion, Distance.FromKilometers(1));
+                map.MoveToRegion(region);
+
+                var firebase = new FirebaseServices();
+
+                var nuevaUbicacion = new Ubicacion
+                {
+                    Latitud = ubicacion.Latitude,
+                    Longitud = ubicacion.Longitude,
+                };
+
+                await firebase.SetUbicacionActual(_uid, nuevaUbicacion);
+
+                // Actualiza el pin actual
+                var pin = new Pin
+                {
+                    Label = "Mi ubicación",
+                    Location = posicion,
+                    Type = PinType.Place
+                };
+
+                map.Pins.Clear();
+                map.Pins.Add(pin);
+
+                // Cargar ruta solo la primera vez
+                if (!_rutaDibujada)
+                {
+                    var ruta = await CargarRutaDesdeGeoJsonAsync();
+                    if (ruta.Count > 1)
+                    {
+                        var polyline = new Polyline
+                        {
+                            StrokeColor = Colors.Blue,
+                            StrokeWidth = 5
+                        };
+
+                        foreach (var punto in ruta)
+                        {
+                            polyline.Geopath.Add(punto);
+                        }
+
+                        map.MapElements.Add(polyline);
+                        _rutaDibujada = true;
+                    }
+                }
+            }
+            else
+            {
+                await DisplayAlert("Ubicación", "No se pudo obtener la ubicación.", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error al obtener ubicación: {ex.Message}", "OK");
         }
     }
 
@@ -124,13 +134,12 @@ public partial class CargarRutaPage : ContentPage
 
                     foreach (var coord in coordinates.EnumerateArray())
                     {
-                        // GeoJSON usa formato: [longitude, latitude]
                         double lon = coord[0].GetDouble();
                         double lat = coord[1].GetDouble();
                         ubicaciones.Add(new Location(lat, lon));
                     }
 
-                    break; // Solo usamos la primera línea
+                    break; // Solo tomamos la primera línea
                 }
             }
         }
