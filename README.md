@@ -5,4 +5,5 @@ DENTRO DE AndroidManifest
 
 #huachuhuillca commit
 #hansnolascobrayan-  commit
+//
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/MiguelLQ/AppMonitoreo)
