@@ -9,19 +9,19 @@
     Title="AppMonitoreo">
 
     <ShellContent
-        Title="Dashboard"
+        Title="Panel"
         Icon="{StaticResource IconDashboard}"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="main" />
 
     <ShellContent
-        Title="Projects"
+        Title="Projectos"
         Icon="{StaticResource IconProjects}"
         ContentTemplate="{DataTemplate pages:ProjectListPage}"
         Route="projects" />
 
     <ShellContent
-        Title="Manage Meta"
+        Title="Administrar"
         Icon="{StaticResource IconMeta}"
         ContentTemplate="{DataTemplate pages:ManageMetaPage}"
         Route="manage" />

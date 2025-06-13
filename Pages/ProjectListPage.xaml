@@ -7,7 +7,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AppMonitoreo.Pages.ProjectListPage"
              x:DataType="pageModels:ProjectListPageModel"
-             Title="Projects">
+             Title="Projectos">
 
 
     <ContentPage.Behaviors>
