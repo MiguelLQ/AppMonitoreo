@@ -77,6 +77,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\CargarRutaPage.xaml.cs">
+	    <DependentUpon>CargarRutaPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\CargarRutaPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\MapaPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

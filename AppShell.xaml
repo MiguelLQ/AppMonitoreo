@@ -40,6 +40,11 @@
         Icon="{StaticResource IconMeta}"
         ContentTemplate="{DataTemplate pages:NewPage1}"
         Route="page1" />
+    <ShellContent
+        Title="Cargar Ruta"
+        Icon="{StaticResource IconMeta}"
+        ContentTemplate="{DataTemplate pages:CargarRutaPage}"
+        Route="cargarruta" />
     <Shell.FlyoutFooter>
         <Grid Padding="15">
             <sf:SfSegmentedControl x:Name="ThemeSegmentedControl" 
