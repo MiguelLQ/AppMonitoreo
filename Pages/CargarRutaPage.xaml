@@ -6,8 +6,13 @@
              Title="CargarRuta">
     <VerticalStackLayout>
         <maps:Map x:Name="map"
-          HeightRequest="650"
+          HeightRequest="550"
           IsShowingUser="True"
           MapType="Satellite" />
+        <Label x:Name="lblCoordenadas"
+           FontSize="16"
+           HorizontalOptions="Center"
+           Margin="0,10,0,0"
+           Text="Coordenadas: ---" />
     </VerticalStackLayout>
 </ContentPage>

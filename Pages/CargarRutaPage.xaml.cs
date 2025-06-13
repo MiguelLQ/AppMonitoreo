@@ -1,4 +1,5 @@
 using System.Text.Json;
+using AppMonitoreo.Models;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
@@ -29,9 +30,24 @@ public partial class CargarRutaPage : ContentPage
 
                 if (ubicacion != null)
                 {
+                    lblCoordenadas.Text = $"Coordenadas: Lat={ubicacion.Latitude}, Lon={ubicacion.Longitude}";
+
                     var posicion = new Location(ubicacion.Latitude, ubicacion.Longitude);
                     var region = MapSpan.FromCenterAndRadius(posicion, Distance.FromKilometers(1));
                     map.MoveToRegion(region);
+                    // Instancia del servicio Firebase
+                    var firebase = new FirebaseServices();
+
+                    // Crear objeto de ubicación
+                    var nuevaUbicacion = new Ubicacion
+                    {
+                        Latitud = ubicacion.Latitude,
+                        Longitud = ubicacion.Longitude,
+                    };
+
+                    // Enviar a Firebase
+                    await firebase.AddUbicacion(nuevaUbicacion);
+                    await DisplayAlert("Ubicación", "Ubicacion enviada.", "OK");
 
                     var pin = new Pin
                     {
