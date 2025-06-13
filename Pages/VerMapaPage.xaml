@@ -8,7 +8,7 @@
         <maps:Map x:Name="map"
                   HeightRequest="650"
                   IsShowingUser="False"
-                  MapType="Street" />
+                  MapType="Satellite" />
         <!-- Aquí se muestran las coordenadas -->
         <Label x:Name="lblCoordenadas"
                Text="Coordenadas: ---"

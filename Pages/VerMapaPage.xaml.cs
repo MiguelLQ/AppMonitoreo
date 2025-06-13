@@ -7,7 +7,7 @@ namespace AppMonitoreo.Pages;
 
 public partial class VerMapaPage : ContentPage
 {
-    private readonly string usuarioUID = "WGKj9WUDTygspeKS7DPlZydPQDc2"; // 👈 reemplaza por el UID real del usuario de prueba
+    private readonly string usuarioUID = "FfnTBoXRCShQzIF5cb2OdgFYdlA2"; // 👈 reemplaza por el UID real del usuario de prueba
 
     private readonly FirebaseServices firebase;
     private CancellationTokenSource cts;
