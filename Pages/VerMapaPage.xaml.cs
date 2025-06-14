@@ -95,7 +95,7 @@ public partial class VerMapaPage : ContentPage
                             var polyline = new Polyline
                             {
                                 StrokeColor = Colors.BlueViolet,
-                                StrokeWidth = 35
+                                StrokeWidth = 25
                             };
 
                             foreach (var punto in ruta)

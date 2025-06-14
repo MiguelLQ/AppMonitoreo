@@ -26,11 +26,6 @@
         ContentTemplate="{DataTemplate pages:ManageMetaPage}"
         Route="manage" />
     <ShellContent
-        Title="Mapa Page"
-        Icon="{StaticResource IconMeta}"
-        ContentTemplate="{DataTemplate pages:MapaPage}"
-        Route="mapa" />
-    <ShellContent
         Title="Pegar Ruta"
         Icon="{StaticResource IconMeta}"
         ContentTemplate="{DataTemplate pages:PegarRuta}"

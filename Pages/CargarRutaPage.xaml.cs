@@ -9,7 +9,7 @@ namespace AppMonitoreo.Pages;
 public partial class CargarRutaPage : ContentPage
 {
     private bool _rutaDibujada = false;
-    private string _uid = "FfnTBoXRCShQzIF5cb2OdgFYdlA2"; // UID fijo (reemplaza si usas autenticación)
+    private string _uid = "WGKj9WUDTygspeKS7DPlZydPQDc2"; //"FfnTBoXRCShQzIF5cb2OdgFYdlA2";  UID fijo (reemplaza si usas autenticación)
 
     public CargarRutaPage()
     {
