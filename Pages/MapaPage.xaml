@@ -7,7 +7,7 @@
     <VerticalStackLayout Padding="10" Spacing="10">
 
         <maps:Map x:Name="map"
-              HeightRequest="400"
+              HeightRequest="650"
               IsShowingUser="True"
               MapType="Satellite" />
 
